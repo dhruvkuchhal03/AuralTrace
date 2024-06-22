@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recognize Song</title>
+</head>
+<body>
+    <h1>Recognize Song</h1>
+    <form action="{{ url_for('recognize') }}" method="post" enctype="multipart/form-data">
+        <label for="test_file">Select the audio file to be recognized:</label>
+        <input type="file" id="test_file" name="test_file" required>
+        <button type="submit">Recognize</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>

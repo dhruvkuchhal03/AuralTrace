@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fingerprint Music</title>
+</head>
+<body>
+    <h1>Fingerprint Music</h1>
+    <form action="{{ url_for('fingerprint') }}" method="post" enctype="multipart/form-data">
+        <label for="music_directory">Select the directory that contains the music to be fingerprinted:</label>
+        <input type="file" id="music_directory" name="music_directory" webkitdirectory multiple required>
+        <button type="submit">Fingerprint</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>

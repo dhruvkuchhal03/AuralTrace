@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Audio Processing</title>
+</head>
+
+<body>
+    <h1>Audio Processing with Aural</h1>
+    <p>Do you want to fingerprint a directory of music files?</p>
+    <form action="{{ url_for('fingerprint') }}" method="get">
+        <button type="submit">Yes</button>
+    </form>
+    <form action="{{ url_for('recognize') }}" method="get">
+        <button type="submit">No, go to recognition</button>
+    </form>
+</body>
+
+</html>

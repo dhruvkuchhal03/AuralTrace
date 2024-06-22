@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recognition Results</title>
+</head>
+<body>
+    <h1>Recognition Results</h1>
+    {% if song %}
+        <p>Total Time: {{ song['total_time'] }} seconds</p>
+        <p>Fingerprint Time: {{ song['fingerprint_time'] }} seconds</p>
+        <p>Query Time: {{ song['query_time'] }} seconds</p>
+        <p>Align Time: {{ song['align_time'] }} seconds</p>
+        <h2>Results:</h2>
+        {% for result in song['results'] %}
+            <p>Song ID: {{ result['song_id'] }}</p>
+            <p>Song Name: {{ result['song_name'].decode('utf-8') }}</p>
+            <p>Input Total Hashes: {{ result['input_total_hashes'] }}</p>
+            <p>Fingerprinted Hashes in DB: {{ result['fingerprinted_hashes_in_db'] }}</p>
+            <p>Hashes Matched in Input: {{ result['hashes_matched_in_input'] }}</p>
+            <p>Input Confidence: {{ result['input_confidence'] }}</p>
+            <p>Fingerprinted Confidence: {{ result['fingerprinted_confidence'] }}</p>
+            <p>Offset: {{ result['offset'] }}</p>
+            <p>Offset Seconds: {{ result['offset_seconds'] }}</p>
+            <p>File SHA1: {{ result['file_sha1'].decode('utf-8') }}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No results to display.</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>
