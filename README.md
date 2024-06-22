@@ -23,7 +23,7 @@ Aural is an audio fingerprinting and recognition algorithm implemented in Python
 
 1. Clone the repository:
    ```bash
-   git clone xxx
+   git clone https://github.com/dhruvkuchhal03/AuralTrace.git
    cd aural
    ```
 2. Install Flask:
