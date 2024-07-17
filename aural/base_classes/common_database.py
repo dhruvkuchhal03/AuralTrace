@@ -5,9 +5,6 @@ from aural.base_classes.base_database import BaseDatabase
 
 
 class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
-    # Since several methods across different databases are actually just the same
-    # I've built this class with the idea to reuse that logic instead of copy pasting
-    # over and over the same code.
 
     def __init__(self):
         super().__init__()

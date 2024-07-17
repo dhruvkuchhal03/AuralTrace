@@ -1,33 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Recognition Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results_style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .more-info {
+            display: none;
+            flex-direction: column;
+        }
+
+        .more-info.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: baseline;
+            /* Show when active */
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Recognition Results</h1>
-    {% if song %}
-        <p>Total Time: {{ song['total_time'] }} seconds</p>
-        <p>Fingerprint Time: {{ song['fingerprint_time'] }} seconds</p>
-        <p>Query Time: {{ song['query_time'] }} seconds</p>
-        <p>Align Time: {{ song['align_time'] }} seconds</p>
-        <h2>Results:</h2>
-        {% for result in song['results'] %}
-            <p>Song ID: {{ result['song_id'] }}</p>
-            <p>Song Name: {{ result['song_name'].decode('utf-8') }}</p>
-            <p>Input Total Hashes: {{ result['input_total_hashes'] }}</p>
-            <p>Fingerprinted Hashes in DB: {{ result['fingerprinted_hashes_in_db'] }}</p>
-            <p>Hashes Matched in Input: {{ result['hashes_matched_in_input'] }}</p>
-            <p>Input Confidence: {{ result['input_confidence'] }}</p>
-            <p>Fingerprinted Confidence: {{ result['fingerprinted_confidence'] }}</p>
-            <p>Offset: {{ result['offset'] }}</p>
-            <p>Offset Seconds: {{ result['offset_seconds'] }}</p>
-            <p>File SHA1: {{ result['file_sha1'].decode('utf-8') }}</p>
-            <hr>
-        {% endfor %}
-    {% else %}
-        <p>No results to display.</p>
-    {% endif %}
-    <a href="{{ url_for('index') }}">Back</a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark ">
+        <a class="navbar-brand" href="#">
+            <img src="../static/brand_name.png" alt="" class="brand_img">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('recognize') }}">Record & Recognize</a>
+                <a class="nav-item nav-link" href="{{ url_for('fingerprint') }}">Songs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mf">
+        <div class="container-fluid">
+            <div>
+                <div class="main-song">
+                    <div class="main-main">
+                        <h1 class="heading" id="txt">Song: </h1>
+                        {% if song %}
+                        <div>
+                            <div class="mb-3">
+                                <h2 style="padding-bottom: 10px; max-width: 400px;"><strong>{{
+                                        song['results'][0]['song_name'].decode('utf-8') }}</strong></h2>
+                                <h4><strong>Total Time:</strong> {{ song['total_time'] }} seconds</h4>
+                                <p id="txt"><strong>Input Confidence:</strong> {{ song['results'][0]['input_confidence']
+                                    }}
+                                </p>
+                            </div>
+                            <div class="song-info">
+                                <button class="btn-lg more-info-btn">More Info</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+
+                        <div class="more-info">
+                            <div class="info-p">
+                                <h2 id="txt">Song Info: </h2>
+                                <div>
+                                    <h5><strong>Song ID:</strong> {{ song['results'][0]['song_id'] }}</h5>
+                                    <h5><strong>Input Total Hashes:</strong> {{ song['results'][0]['input_total_hashes']
+                                        }}
+                                    </h5>
+                                    <h5><strong>Fingerprinted Hashes in DB:</strong> {{
+                                        song['results'][0]['fingerprinted_hashes_in_db']
+                                        }}
+                                    </h5>
+                                    <h5><strong>Hashes Matched in Input:</strong> {{
+                                        song['results'][0]['hashes_matched_in_input'] }}
+                                    </h5>
+                                    <h5><strong>Input Confidence:</strong> {{ song['results'][0]['input_confidence'] }}
+                                    </h5>
+                                    <h5><strong>Fingerprinted Confidence:</strong> {{
+                                        song['results'][0]['fingerprinted_confidence']
+                                        }}
+                                    </h5>
+                                    <h5><strong>Offset:</strong> {{ song['results'][0]['offset'] }}</h5>
+                                    <h5><strong>Offset Seconds:</strong> {{ song['results'][0]['offset_seconds'] }}</h5>
+                                    <h5><strong>File SHA1:</strong> {{ song['results'][0]['file_sha1'].decode('utf-8')
+                                        }}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="info-s">
+                                <h2 id="txt">Recognition<br> Info: </h2>
+                                <div>
+                                    <h5><strong>Fingerprint Time:</strong> {{ song['fingerprint_time'] }} seconds</h5>
+                                    <h5><strong>Query Time:</strong> {{ song['query_time'] }} seconds</h5>
+                                    <h5><strong>Align Time:</strong> {{ song['align_time'] }} seconds</h5>
+                                </div>
+
+                            </div>
+                            <button class="btn btn-secondary show-less-btn">Show Less</button>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No results to display.</p>
+                {% endif %}
+            </div>
+            <div class="btns">
+                <div>
+                    <button class="btn-lg sm-button youtube-search-btn" id="yt"><img id="simg" src="../static/yt.svg"
+                            alt="">Open in
+                        YouTube</button>
+                </div>
+                <div>
+                    <button class="btn-lg sm-button wynk-search-btn" id="wynk"><img id="simg" src="../static/wynk.png"
+                            alt="">Open in
+                        Wynk</button>
+                </div>
+                <div>
+                    <button class="btn-lg sm-button spotify-search-btn" id="sp"><img id="simg" src="../static/sp.svg"
+                            alt="">Open in
+                        Spotify</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.more-info-btn').click(function () {
+                var moreInfo = $(this).closest('.main-song').find('.more-info');
+                moreInfo.toggleClass('active');
+                if (moreInfo.hasClass('active')) {
+                    $(this).closest('.main-song').find('.more-info-btn').hide(); // Hide the More Info button
+                }
+            });
+
+            $('.show-less-btn').click(function () {
+                $(this).closest('.main-song').find('.more-info').removeClass('active');
+                $(this).closest('.main-song').find('.more-info-btn').show(); // Show the More Info button
+            });
+
+            $('.youtube-search-btn').click(function () {
+                var songName = "{{ song['results'][0]['song_name'].decode('utf-8') }}";
+                var youtubeUrl = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(songName);
+                window.open(youtubeUrl, '_blank');
+            });
+
+            $('.spotify-search-btn').click(function () {
+                var songName = "{{ song['results'][0]['song_name'].decode('utf-8') }}";
+                var spotifyUrl = 'https://open.spotify.com/search/' + encodeURIComponent(songName);
+                window.open(spotifyUrl, '_blank');
+            });
+            $('.wynk-search-btn').click(function () {
+                var songName = "{{ song['results'][0]['song_name'].decode('utf-8') }}";
+                var wynkUrl = 'https://wynk.in/music/detailsearch/' + encodeURIComponent(songName);
+                window.open(wynkUrl, '_blank');
+            });
+        });
+    </script>
 </body>
+
 </html>

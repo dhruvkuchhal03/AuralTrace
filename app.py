@@ -1,7 +1,9 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, send_file, jsonify
 from werkzeug.utils import secure_filename
 import os
 import shutil
+import time
+import subprocess
 from aural import Aural
 from aural.logic.recognizer.file_recognizer import FileRecognizer
 
@@ -13,6 +15,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+LOG_FILE = 'recognition_log.txt'
 
 config = {
     "database": {
@@ -26,11 +29,9 @@ config = {
 # Initialize Aural
 atr = Aural(config)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/fingerprint', methods=['GET', 'POST'])
 def fingerprint():
@@ -43,8 +44,7 @@ def fingerprint():
             flash('No files selected', 'danger')
             return redirect(request.url)
 
-        directory_path = os.path.join(
-            app.config['UPLOAD_FOLDER'], 'fingerprint')
+        directory_path = os.path.join(app.config['UPLOAD_FOLDER'], 'fingerprint')
         if os.path.exists(directory_path):
             shutil.rmtree(directory_path)
         os.makedirs(directory_path)
@@ -58,28 +58,49 @@ def fingerprint():
         return redirect(url_for('recognize'))
     return render_template('fingerprint.html')
 
-
 @app.route('/recognize', methods=['GET', 'POST'])
 def recognize():
     if request.method == 'POST':
-        if 'test_file' not in request.files or request.files['test_file'].filename == '':
-            flash('No file selected', 'danger')
+        if 'recorded_file' in request.form:
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], request.form['recorded_file'])
+        elif 'test_file' in request.files and request.files['test_file'].filename != '':
+            file = request.files['test_file']
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+        else:
+            flash('No file selected or recorded', 'danger')
             return redirect(request.url)
 
-        file = request.files['test_file']
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
-
         song = atr.recognize(FileRecognizer, file_path)
+        log_recognition_details(file_path, song)
         return render_template('results.html', song=song)
     return render_template('recognize.html')
-
 
 @app.route('/results')
 def results():
     return render_template('results.html')
 
+@app.route('/record_audio', methods=['POST'])
+def record_audio_route():
+    filename = f"output_{int(time.time())}.wav"
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    try:
+        subprocess.run(['python', 'audio_recorder.py', file_path], check=True)
+        return jsonify(file_name=filename, file_path=url_for('uploaded_file', filename=filename))
+    except subprocess.CalledProcessError as e:
+        return jsonify(error=str(e)), 500
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+def log_recognition_details(file_path, song):
+    with open(LOG_FILE, 'a') as log_file:
+        log_file.write(f"---\nTimestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+        log_file.write(f"Input File: {file_path}\n")
+        log_file.write(f"File Size: {os.path.getsize(file_path)} bytes\n")
+        log_file.write(f"Recognition Results: {song}\n\n")
 
 if __name__ == '__main__':
     app.run(debug=True)

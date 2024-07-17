@@ -1,0 +1,198 @@
+body{
+
+    position: relative;
+    /* width: 1280px; */
+    height: 832px;
+    background: linear-gradient(180deg, #262424 0%, #732E2E 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+.navbar{
+    position: absolute;
+    margin: 45px;
+    top: 45px;
+    height: 90px;
+    background: #2C2C2C;
+    border-radius: 15px;
+}
+
+.nav-item{
+    /* width: 72px; */
+    /* height: 24px; */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    /* font-weight: 600; */
+    font-size: 20px;
+    line-height: 24px;
+    /* padding-left: 10rem !important; */
+    /* padding-right: 10rem !important; */
+
+    color: #FFFFFF;
+}
+
+.fp{
+    margin-top: 180px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.head{
+/* width: 345.03px; */
+    /* height: 113.39px; */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 51.8354px;
+    line-height: 63px;
+
+    color: #FFFFFF;
+    margin-bottom: 50px;
+}
+
+.label{
+    /* height: 113.39px; */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 63px;
+
+    color: #FFFFFF;   
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.form-control-file{
+    color: #FFFFFF;
+}
+
+.btn-lg {
+    appearance: none;
+    background-color: #FB001D;
+    border: 2px solid #FB001D;
+    border-radius: 15px!important;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 60px;
+    min-width: 0;
+    outline: none;
+    /* padding: 0.25rem 1rem!important;  */
+    /* padding: 16px 24px; */
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 200px; /* Adjusted width */
+    height: 66px; /* Adjusted height */
+
+    /* position: absolute; Added positioning */
+    /* left: 760px; Position from the left */
+    /* align-self: center; */
+    will-change: transform;
+  }
+  
+  .btn-lg:disabled {
+    pointer-events: none;
+  }
+  
+  .btn-lg:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    color: #FFFFFF;
+  }
+  
+  .btn-lg:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+.mainform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#music_directory{
+    width: 215px;
+    margin-bottom: 50px;
+
+}
+
+#sub{
+    margin-top: 25px;
+}
+
+.custom-btn {
+    appearance: none;
+    background-color: #FB001D;
+    border: 2px solid #FB001D;
+    border-radius: 15px!important;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 60px;
+    min-width: 0;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 200px; /* Adjusted width */
+    height: 66px; /* Adjusted height */
+    will-change: transform;
+}
+  
+.custom-btn:disabled {
+    pointer-events: none;
+}
+  
+.custom-btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    color: #FFFFFF;
+}
+  
+.custom-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.file-input-wrapper {
+    position: relative;
+}
