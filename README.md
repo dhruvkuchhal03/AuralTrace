@@ -42,7 +42,7 @@ Aural is an audio fingerprinting and recognition algorithm implemented in Python
 ### Running the Program
 
 1. For SQL, run `./start_mysql.sh` and then enter the password.
-2. For the main project, install Flask and then run:
+2. For the main project, install Flask and then run:8
 
 ```
 python3 app.py
