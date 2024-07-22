@@ -12,7 +12,7 @@ To install and run Aural Trace, follow these steps:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/aural-trace.git
+   git clone https://github.com/dhruvkuchhal03/AuralTrace.git
    cd aural-trace
    ```
 
