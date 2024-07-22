@@ -1,0 +1,9 @@
+Flask==2.0.2
+SQLAlchemy==1.4.27
+pymysql==1.0.2
+numpy==1.21.4
+scipy==1.7.3
+librosa==0.8.1
+pydub==0.25.1
+sounddevice==0.4.3
+wavio==0.0.4
