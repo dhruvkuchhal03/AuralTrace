@@ -1,99 +1,94 @@
-# Aural: Audio Fingerprinting and Recognition Algorithm
+# Aural Trace
 
-## Description
+## Project Description
 
-Aural is an audio fingerprinting and recognition algorithm implemented in Python. It can memorize audio by listening to it once and fingerprinting it. By playing a song and recording microphone input or reading from disk, Aural matches the audio against the fingerprints held in the database, returning the song being played.
+Aural Trace is a sophisticated audio fingerprinting and recognition system designed to identify music tracks from audio inputs. This project leverages advanced algorithms to analyze and recognize songs from recorded or uploaded audio files. It serves as a useful tool for music enthusiasts, researchers, and developers by providing an easy-to-use interface for audio fingerprinting and song recognition.
+
+Aural Trace solves the problem of identifying unknown music tracks by comparing the audio fingerprints of input files against a pre-existing database of music fingerprints. The project includes functionalities for recording audio, uploading music files, fingerprinting directories of music, and recognizing songs from recorded or uploaded audio clips. It is built using Python and Flask for the web interface, with additional libraries and tools for audio processing and database management.
+
+## Installation Instructions
+
+To install and run Aural Trace, follow these steps:
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/aural-trace.git
+   cd aural-trace
+   ```
+
+2. **Install Dependencies**
+   Ensure you have Python 3.x installed. Then, install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set Up MySQL Database**
+   Start the MySQL server and create the necessary database:
+   ```bash
+   sudo /usr/local/mysql/support-files/mysql.server start
+   mysql -u root -p
+   CREATE DATABASE aural;
+   ```
+
+4. **Configure the Application**
+   Update the `aural.cnf.SAMPLE` file with your database credentials and rename it to `aural.cnf`.
+
+5. **Run MySQL database**
+   ```bash
+   ./start_mysql.sh
+   ```
+   and then enter the password.
+
+5. **Run the Application**
+   ```bash
+   python app.py
+   ```
+   The application will be accessible at `http://127.0.0.1:5000`.
+
+## Usage
+
+### Recording and Recognizing Audio
+
+1. **Recording Audio**
+   To record a 10-second audio clip:
+   ```bash
+   python audio_recorder.py output_filename.wav
+   ```
+   This will save the recording as `output_filename.wav`.
+
+2. **Fingerprinting Music Directory**
+   To fingerprint all `.mp3` files in a directory:
+   ```bash
+   python aural.py --fingerprint /path/to/music_directory .mp3
+   ```
+
+3. **Recognizing Audio from File**
+   To recognize a song from an audio file:
+   ```bash
+   python aural.py --recognize file /path/to/audio_file.wav
+   ```
+
+### Web Interface
+
+1. **Upload and Fingerprint Music**
+   Navigate to `http://127.0.0.1:5000/fingerprint`, select a directory of music files, and click "Fingerprint".
+
+2. **Recognize Uploaded or Recorded Audio**
+   Navigate to `http://127.0.0.1:5000/recognize`, upload an audio file, or record a new audio clip for recognition.
 
 ## Features
 
-- Memorizes and fingerprints audio by listening to it once.
-- Matches live recordings or disk files against the stored fingerprints.
-- Supports MySQL and Postgres databases.
-- Robust against noise.
-  Note: For voice recognition, Aural is not the right tool! Aural excels at recognition of exact signals with reasonable amounts of noise.
+- **Audio Fingerprinting:** Generates unique fingerprints for audio files, allowing efficient and accurate music recognition.
+- **Song Recognition:** Identifies music tracks from recorded or uploaded audio files.
+- **Web Interface:** User-friendly web interface for uploading music files, fingerprinting, and recognizing songs.
+- **Audio Recording:** Allows users to record audio directly from the web interface or command line.
+- **Detailed Logging:** Logs recognition details for audit and analysis.
 
-## Installation
+### Version 1.0.0
 
-### Requirements
+- Initial release with core features for audio fingerprinting and recognition.
+- Web interface for uploading, fingerprinting, and recognizing songs.
+- Command-line tools for recording, fingerprinting, and recognizing audio.
 
-- Python 3.x
-- MySQL or Postgres
 
-### Steps
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/dhruvkuchhal03/AuralTrace.git
-   cd aural
-   ```
-2. Install Flask:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   pip install Flask pydub==0.23.1 PyAudio==0.2.11 numpy==1.17.2 scipy==1.3.1 matplotlib==3.1.1 mysql-connector-python==8.0.17 psycopg2-binary
-   ```
-3. Set up the SQL database:
-   ```bash
-   mysql -u root -p
-   Enter password: **********
-   mysql> CREATE DATABASE IF NOT EXISTS aural;
-   ```
-
-### Running the Program
-
-1. For SQL, run `./start_mysql.sh` and then enter the password.
-2. For the main project, install Flask and then run:8
-
-```
-python3 app.py
-```
-
-# Usage
-
-## Fingerprinting
-
-1. Create an Aural object with your configuration settings:
-
-```python
-from aural import Aural
-
-config = {
-    "database": {
-        "host": "127.0.0.1",
-        "user": "root",
-        "password": "<password>",
-        "database": "<database name>",
-    }
-}
-atr = Aural(config)
-```
-
-2. Fingerprint all audio files in a directory:
-
-```python
-atr.fingerprint_directory("va_us_top_40/mp3", [".mp3"], 3)
-```
-
-## Recognizing
-
-1. Recognize audio from a file:
-
-```python
-from aural.logic.recognizer.file_recognizer import FileRecognizer
-song = atr.recognize(FileRecognizer, "va_us_top_40/wav/Mirrors - Justin Timberlake.wav")
-```
-
-2. Recognize audio through a microphone:
-
-```python
-from aural.logic.recognizer.microphone_recognizer import MicrophoneRecognizer
-song = atr.recognize(MicrophoneRecognizer, seconds=10) # Defaults to 10 seconds.
-```
-
-# Project Status
-
-Active - Development is ongoing. Contributions are welcome.
-
-# Conclusion
-
-Aural is a robust audio fingerprinting and recognition tool that allows you to identify songs by their audio fingerprints. It supports both file-based and microphone-based recognition, making it versatile for various applications.
